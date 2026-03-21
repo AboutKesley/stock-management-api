@@ -1,6 +1,20 @@
 @Stock_HostAddress = http://localhost:5038
 
-GET {{Stock_HostAddress}}/weatherforecast/
+GET {{Stock_HostAddress}}/weatherforecast/GetWeatherForecast
 Accept: application/json
 
 ###
+
+GET {{Stock_HostAddress}}/weatherforecast/teste
+Accept: application/json
+
+
+#################################
+
+GET {{Stock_HostAddress}}/stock/store
+Content-Type: application/json
+
+{
+    "name": "Car",
+    "quantity": 10
+}
