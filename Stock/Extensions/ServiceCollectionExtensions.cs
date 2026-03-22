@@ -4,6 +4,9 @@
     {
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
+            services.AddControllers();
+            services.AddOpenApi();
+
             return services;
         }
     }

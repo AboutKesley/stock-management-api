@@ -1,0 +1,5 @@
+@host= "http://localhost:5038"
+@controller = "ExampleLifeCycleController"
+
+POST {{host}}/{{controller}}/dosomething
+Accept: application/json
