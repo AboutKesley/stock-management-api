@@ -13,6 +13,7 @@ namespace Stock.Examples
     //Resolve cada dependência
     //Instancia tudo automaticamente
     //Entrega pronto 🚀
+    //“Dependency Injection é um jeito elegante de parar de usar new espalhado no código, e reaproveitar instancias.”
     [ApiController]
     [Route("[controller]")]
     public class ExampleLifeCycleController : ControllerBase
