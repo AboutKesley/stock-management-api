@@ -1,8 +1,7 @@
 using Scalar.AspNetCore;
 using Stock.Extensions;
-using Swashbuckle.AspNetCore;
 using Stock.Examples;
-
+using Stock.Domain.Extensions;
 public partial class Program
 {
     private static void Main(string[] args)
@@ -11,6 +10,7 @@ public partial class Program
 
         builder.Services.AddServices();
         builder.Services.AddExamples();
+        builder.Services.AddDomain();
 
         var app = builder.Build();
 

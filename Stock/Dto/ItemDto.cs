@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using Stock.Domain.Models;
+using System.Text.Json.Serialization;
 
 namespace Stock.Dto
 {
@@ -9,5 +10,14 @@ namespace Stock.Dto
 
         [JsonPropertyName("Quantity")]
         public int Quantity { get; set; }
+
+        public Item ToDomain()
+        {
+            return new Item
+            {
+                Name = this.Name,
+                Quantity = this.Quantity
+            };
+        }
     }
 }
