@@ -8,9 +8,16 @@ namespace Stock.Domain.Services
 {
     internal class ItemService : IItemService
     {
+        public IItemRepository _itemRepository { get; set; }
+
+        public ItemService(IItemRepository itemRepository)
+        {
+            _itemRepository = itemRepository;
+        }
+
         public Item CreateItem(Item item)
         {
-            throw new NotImplementedException();
+            return _itemRepository.CreateItem(item);
         }
     }
 }
