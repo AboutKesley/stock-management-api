@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="ExemploInterface/ExemploInterface.csproj" Id="daca8cc1-204e-4188-b499-68cb06aa1056" />
   <Project Path="Stock.Domain/Stock.Domain.csproj" Id="f0af6156-f258-4e1c-b96d-5a3e0aa42b59" />
   <Project Path="Stock/Stock.Application.WebApi.csproj" />
 </Solution>

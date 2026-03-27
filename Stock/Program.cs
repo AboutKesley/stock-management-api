@@ -17,7 +17,6 @@ public partial class Program
         if (app.Environment.IsDevelopment())
         {
             app.MapOpenApi();
-            app.MapScalarApiReference();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/openapi/v1.json", "Stock API v1");
