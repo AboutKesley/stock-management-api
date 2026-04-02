@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Stock.Application.WebApi.Dto.Responses;
 using Stock.Domain.Interfaces;
 using Stock.Domain.Services;
 using Stock.Dto;
@@ -17,12 +18,18 @@ namespace Stock.Controllers
         }
 
         [HttpPost]
-        public ItemDto CreateItem(ItemDto item, bool isStockableItem)
+        public ResponseItemDto CreateItem(ItemDto item)
         {
             try
             {
-                _itemService.CreateItem(item.ToDomain());
-                return item;
+                var result = _itemService.CreateItem(item.ToDomain());
+
+                var newItem = new ResponseItemDto
+                {
+                    Id = result.Id
+                };
+
+                return newItem;
             }
             catch (Exception e)
             {

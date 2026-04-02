@@ -1,4 +1,5 @@
-﻿using Stock.Domain.Models;
+﻿using Stock.Domain.Enums;
+using Stock.Domain.Models;
 using System.Text.Json.Serialization;
 
 namespace Stock.Dto
@@ -11,12 +12,17 @@ namespace Stock.Dto
         [JsonPropertyName("Quantity")]
         public int Quantity { get; set; }
 
+        [JsonPropertyName("Type")]
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public ItemType Type { get; set; }
+
         public Item ToDomain()
         {
             return new Item
             {
                 Name = this.Name,
-                Quantity = this.Quantity
+                Quantity = this.Quantity,
+                Type = this.Type
             };
         }
     }

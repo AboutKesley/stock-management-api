@@ -8,16 +8,18 @@ namespace Stock.Domain.Services
 {
     internal class ItemService : IItemService
     {
-        public IItemRepository _itemRepository { get; set; }
+        //public IItemRepository _itemRepository { get; set; }
 
-        public ItemService(IItemRepository itemRepository)
-        {
-            _itemRepository = itemRepository;
-        }
+        //public ItemService(IItemRepository itemRepository)
+        //{
+        //    _itemRepository = itemRepository;
+        //}
 
         public Item CreateItem(Item item)
         {
-            return _itemRepository.CreateItem(item);
+            item.Id = Random.Shared.Next(1, 1000); //Remove this when using a database that auto-generates IDs
+            return item;
+            //  return _itemRepository.CreateItem(item);
         }
     }
 }
