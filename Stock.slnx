@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Itens de Solução/">
+    <File Path="README.md" />
+  </Folder>
   <Project Path="ExemploEnums/ExemploEnums.csproj" Id="b659c07c-c279-4c16-943c-4358d4515172" />
   <Project Path="ExemploGenerics/ExemploGenerics.csproj" Id="f63c6327-f011-43a0-972a-3a7563478725" />
   <Project Path="ExemploInterface/ExemploInterface.csproj" Id="daca8cc1-204e-4188-b499-68cb06aa1056" />

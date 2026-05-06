@@ -11,7 +11,6 @@ namespace Stock.Controllers
         [Route("store")]
         public ItemDto StoreItem(ItemDto item)
         {
-            
             return item;
         }
     }

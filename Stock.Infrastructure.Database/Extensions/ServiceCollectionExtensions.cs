@@ -1,8 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Stock.Domain.Interfaces;
 using Stock.Infrastructure.Database.Context;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Stock.Infrastructure.Database.Extensions
@@ -13,6 +15,16 @@ namespace Stock.Infrastructure.Database.Extensions
         {
             services.AddDbContext<StockDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+        }
+
+        public static IServiceCollection AddInfrastructure(this IServiceCollection service, IConfiguration configuration)
+        { 
+            service.AddDbContext<StockDbContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
+            service.AddScoped<IItemRepository, ItemRepository>();
+
+            return service;
         }
     }
 }

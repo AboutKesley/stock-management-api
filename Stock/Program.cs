@@ -2,6 +2,11 @@ using Scalar.AspNetCore;
 using Stock.Extensions;
 using Stock.Examples;
 using Stock.Domain.Extensions;
+using Stock.Domain.Interfaces;
+using Stock.Domain.Services;
+using Stock.Infrastructure.Database;
+using Stock.Infrastructure.Database.Extensions;
+
 public partial class Program
 {
     private static void Main(string[] args)
@@ -11,6 +16,11 @@ public partial class Program
         builder.Services.AddServices();
         builder.Services.AddExamples();
         builder.Services.AddDomain();
+        //builder.Services.AddScoped<IItemService, ItemService>();
+        //builder.Services.AddScoped<IItemRepository, ItemRepository>();
+        //builder.Services.AddDbContext<StockDbContext>();
+        builder.Services.AddInfrastructure(builder.Configuration);
+
 
         var app = builder.Build();
 

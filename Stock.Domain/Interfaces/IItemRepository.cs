@@ -1,8 +1,12 @@
 ﻿using Stock.Domain.Models;
+using Stock.Domain.Services;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Stock.Domain.Interfaces
 {
-    public interface IItemService
+    public interface IItemRepository
     {
         Item Create(Item item);
         Item? GetById(int id);

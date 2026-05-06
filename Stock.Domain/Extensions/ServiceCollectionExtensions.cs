@@ -13,7 +13,7 @@ namespace Stock.Domain.Extensions
         {
             services.AddScoped<IItemService, ItemService>();
 
-            return services;
+            return services; 
         }
     }
 }
