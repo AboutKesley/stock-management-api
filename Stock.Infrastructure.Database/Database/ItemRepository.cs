@@ -3,45 +3,54 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Stock.Domain.Interfaces;
+using Stock.Infrastructure.Database.Context;
 
 namespace Stock.Infrastructure.Database
 {
     public class ItemRepository : IItemRepository
     {  
-        private static List<Item> _items = new();
+        private readonly StockDbContext _context;
+
+        public ItemRepository(StockDbContext context)
+        {
+            _context = context;
+        }
 
         public Item Create(Item item)
         {
-            _items.Add(item);
+            _context.Items.Add(item);
+            _context.SaveChanges();
             return item;
         }
 
         public Item? GetById(int id)
         {
-            return _items.Find(x => x.Id == id);
+            return _context.Items.Find(id);
         }  
 
         public List<Item> GetAll()
         {
-            return _items.ToList();
+            return _context.Items.ToList();
         }
 
         public bool Delete(int id)
         {
-            var item = _items.Find(x => x.Id == id);
+            var item = _context.Items.FirstOrDefault(x => x.Id == id);
             if (item == null)
                 return false;
-            return _items.Remove(item);
+            _context.Items.Remove(item);
+            _context.SaveChanges();
+            return true;
         }
 
         public Item? Update(int id, Item item)
         {
-            var existingItem = _items.Find(x => x.Id == id);
-            if(existingItem == null)
+           var existingItem = _context.Items.FirstOrDefault(x => x.Id == id);
+            if (existingItem == null)
                 return null;
 
-            existingItem.Update(item.Name, item.Quantity, item.Type);
-          
+            existingItem.Update(item.Name, item.Quantity, item.Type, item.Price);
+            _context.SaveChanges();
             return existingItem;
         }
 

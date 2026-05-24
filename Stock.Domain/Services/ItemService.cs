@@ -17,9 +17,7 @@ namespace Stock.Domain.Services
         }
 
         public Item Create(Item item) 
-        {
-            item.Id = Random.Shared.Next(1, 1000); //Remove this when using a database that auto-generates IDs
-
+        {  
             if (string.IsNullOrWhiteSpace(item.Name))
                 throw new Exception("Item name cannot be empty, null or space.");
 

@@ -15,6 +15,7 @@ namespace Stock.Dto
         [JsonPropertyName("Type")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public ItemType Type { get; set; }
+        public decimal Price { get; set; }
 
         public Item ToDomain()
         {
@@ -22,7 +23,8 @@ namespace Stock.Dto
             {
                 Name = this.Name,
                 Quantity = this.Quantity,
-                Type = this.Type
+                Type = this.Type,
+                Price = this.Price
             };
         }
     }

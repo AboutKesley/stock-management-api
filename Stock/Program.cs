@@ -6,6 +6,7 @@ using Stock.Domain.Interfaces;
 using Stock.Domain.Services;
 using Stock.Infrastructure.Database;
 using Stock.Infrastructure.Database.Extensions;
+using Stock.Application.WebApi.Middleware;
 
 public partial class Program
 {
@@ -22,6 +23,7 @@ public partial class Program
         builder.Services.AddInfrastructure(builder.Configuration);
 
 
+
         var app = builder.Build();
 
         if (app.Environment.IsDevelopment())
@@ -35,7 +37,9 @@ public partial class Program
 
         app.UseHttpsRedirection();
         app.UseAuthorization();
+        app.UseMiddleware<ExceptionMiddleware>();
         app.MapControllers();
         app.Run();
+
     }
 }
