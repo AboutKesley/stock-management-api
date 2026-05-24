@@ -8,14 +8,17 @@ namespace Stock.Infrastructure.Database.Context
 {
     public class StockDbContext : DbContext
     {
-        public StockDbContext(DbContextOptions options) : base(options)
+        public StockDbContext(DbContextOptions<StockDbContext> options) : base(options)
         {
         }
 
         public DbSet<Item> Items { get; set; }
 
-        public override void OnModelCreating(DbModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Item>()
+                .Property(x => x.Price)
+                .HasPrecision(18, 2);
         }
     }
 }

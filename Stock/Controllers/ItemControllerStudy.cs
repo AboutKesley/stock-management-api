@@ -2,7 +2,6 @@
 using Stock.Application.WebApi.Dto;
 using Stock.Application.WebApi.Dto.Responses;
 using Stock.Domain.Interfaces;
-using Stock.Dto;
 
 namespace Stock.Application.WebApi.Controllers
 {
@@ -20,23 +19,58 @@ namespace Stock.Application.WebApi.Controllers
         [HttpPost]
         public IActionResult CreateItem(CreateItemDto item)
         {
-            try
-            {
-                var result = _itemService.Create(item.ToDomain());
-                var responseDto = new ResponseItemDto
-                {
-                    Id = result.Id,
-                    Name = result.Name,
-                    Quantity = result.Quantity,
-                    ItemType = (int)result.Type
-                };
+            var result = _itemService.Create(item.ToDomain());
+            var responseDto = result.ToResponseDto();
 
-                return Created($"/api/items/{result.Id}",responseDto);
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
+            return CreatedAtAction(
+                nameof(GetById),
+                new { id = responseDto.Id },
+                responseDto
+            );
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            var item = _itemService.GetById(id);
+
+            if (item == null)
+                return NotFound("Item not found.");
+
+            return Ok(item.ToResponseDto());
+        }
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var items = _itemService.GetAll();
+
+            return Ok(items.Select(item => item.ToResponseDto()).ToList());
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var result = _itemService.Delete(id);
+
+            if (!result)
+                return NotFound();
+
+            return NoContent();
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, UpdateItemDto item)
+        {
+            if (item == null)
+                return BadRequest("Item data is required.");
+
+            var result = _itemService.Update(id, item.ToDomain());
+
+            if (result == null)
+                return NotFound("Item not found.");
+
+            return Ok(result.ToResponseDto());
         }
     }
 }

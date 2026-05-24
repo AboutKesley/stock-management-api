@@ -10,10 +10,11 @@ namespace Stock.Application.WebApi.Dto
         public int Quantity { get; set; }
 
         public ItemType Type { get; set; }
+        public decimal Price { get; set; }
 
         public Item ToDomain()
         {
-            return Item.Create(Name, Quantity, Type);
+            return Item.Create(Name, Quantity, Type, Price);
         }
     };    
 }

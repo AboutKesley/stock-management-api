@@ -13,9 +13,9 @@ namespace Stock.Application.WebApi.Mappings
                 Id = item.Id,
                 Name = item.Name,
                 Quantity = item.Quantity,
-                ItemType = (int)item.Type
+                ItemType = (int)item.Type,
+                Price = item.Price
             };
-
         }
     }
 }
