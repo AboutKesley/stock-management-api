@@ -1,8 +1,0 @@
-<Solution>
-  <Folder Name="/Itens de Solução/">
-    <File Path="README.md" />
-  </Folder>
-  <Project Path="Stock.Domain/Stock.Domain.csproj" Id="f0af6156-f258-4e1c-b96d-5a3e0aa42b59" />
-  <Project Path="Stock.Infrastructure.Database/Stock.Infrastructure.Database.csproj" />
-  <Project Path="Stock/Stock.Application.WebApi.csproj" />
-</Solution>
