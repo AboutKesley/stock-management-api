@@ -2,9 +2,6 @@
   <Folder Name="/Itens de Solução/">
     <File Path="README.md" />
   </Folder>
-  <Project Path="ExemploEnums/ExemploEnums.csproj" Id="b659c07c-c279-4c16-943c-4358d4515172" />
-  <Project Path="ExemploGenerics/ExemploGenerics.csproj" Id="f63c6327-f011-43a0-972a-3a7563478725" />
-  <Project Path="ExemploInterface/ExemploInterface.csproj" Id="daca8cc1-204e-4188-b499-68cb06aa1056" />
   <Project Path="Stock.Domain/Stock.Domain.csproj" Id="f0af6156-f258-4e1c-b96d-5a3e0aa42b59" />
   <Project Path="Stock.Infrastructure.Database/Stock.Infrastructure.Database.csproj" />
   <Project Path="Stock/Stock.Application.WebApi.csproj" />
