@@ -21,7 +21,7 @@ namespace Stock.Application.WebApi.Controllers
         public IActionResult CreateItem(CreateItemDto item)
         {
             var result = _itemService.Create(item.ToDomain());
-            var responseDto = result.ToResponseDto();
+            var responseDto = result.ToResponseDto();  
 
             return CreatedAtAction(
                 nameof(GetById),
