@@ -1,19 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Stock.Domain.Models;
+using Stock.Infrastructure.Configurations;
 
 namespace Stock.Infrastructure.Context;
 
-public class StockDbContext : DbContext
+public sealed class StockDbContext : DbContext
 {
     public StockDbContext(DbContextOptions<StockDbContext> options)
         : base(options)
     {
     }
 
-    public DbSet<Item> Items { get; set; }
+    public DbSet<Item> Items => Set<Item>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Item>();
+        modelBuilder.ApplyConfiguration(new ItemConfiguration());
     }
 }

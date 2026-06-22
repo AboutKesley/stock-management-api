@@ -5,7 +5,7 @@ using Stock.Infrastructure.Context;
 
 namespace Stock.Infrastructure.Repositories;
 
-public sealed class ItemRepository : IItemRepository
+public class ItemRepository : IItemRepository
 {
     private readonly StockDbContext _context;
 
@@ -17,6 +17,7 @@ public sealed class ItemRepository : IItemRepository
     public async Task<Item> CreateAsync(Item item, CancellationToken cancellationToken)
     {
         _context.Items.Add(item);
+
         await _context.SaveChangesAsync(cancellationToken);
 
         return item;
@@ -25,7 +26,6 @@ public sealed class ItemRepository : IItemRepository
     public async Task<Item?> GetByIdAsync(int id, CancellationToken cancellationToken)
     {
         return await _context.Items
-            .AsNoTracking()
             .FirstOrDefaultAsync(item => item.Id == id, cancellationToken);
     }
 
@@ -33,7 +33,6 @@ public sealed class ItemRepository : IItemRepository
     {
         return await _context.Items
             .AsNoTracking()
-            .OrderBy(item => item.Id)
             .ToListAsync(cancellationToken);
     }
 
@@ -61,6 +60,7 @@ public sealed class ItemRepository : IItemRepository
             return false;
 
         _context.Items.Remove(item);
+
         await _context.SaveChangesAsync(cancellationToken);
 
         return true;

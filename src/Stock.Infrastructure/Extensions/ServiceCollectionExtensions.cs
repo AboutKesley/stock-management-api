@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Stock.Application.Interfaces;
 using Stock.Infrastructure.Context;
-using Stock.Infrastructure.Database;
+using Stock.Infrastructure.Repositories;
 
 namespace Stock.Infrastructure.Extensions;
 

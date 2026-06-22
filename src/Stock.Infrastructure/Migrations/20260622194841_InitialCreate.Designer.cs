@@ -11,7 +11,7 @@ using Stock.Infrastructure.Context;
 namespace Stock.Infrastructure.Migrations
 {
     [DbContext(typeof(StockDbContext))]
-    [Migration("20260622164741_InitialCreate")]
+    [Migration("20260622194841_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -34,7 +34,8 @@ namespace Stock.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -44,7 +45,7 @@ namespace Stock.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Items");
+                    b.ToTable("Items", (string)null);
                 });
 #pragma warning restore 612, 618
         }
