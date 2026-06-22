@@ -1,30 +1,25 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Stock.Domain.Interfaces;
-using Stock.Infrastructure.Database.Context;
-using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text;
+using Stock.Application.Interfaces;
+using Stock.Infrastructure.Context;
+using Stock.Infrastructure.Database;
 
-namespace Stock.Infrastructure.Database.Extensions
+namespace Stock.Infrastructure.Extensions;
+
+public static class ServiceCollectionExtensions
 {
-    public static class ServiceCollectionExtensions
+    public static IServiceCollection AddInfrastructure(
+        this IServiceCollection services,
+        IConfiguration configuration)
     {
-        public static void AddDatabase(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.AddDbContext<StockDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
-        }
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
 
-        public static IServiceCollection AddInfrastructure(this IServiceCollection service, IConfiguration configuration)
-        { 
-            service.AddDbContext<StockDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+        services.AddDbContext<StockDbContext>(options =>
+            options.UseSqlServer(connectionString));
 
-            service.AddScoped<IItemRepository, ItemRepository>();
+        services.AddScoped<IItemRepository, ItemRepository>();
 
-            return service;
-        }
+        return services;
     }
 }

@@ -1,32 +1,63 @@
-﻿namespace Stock.Application.WebApi.Middleware
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace Stock.Api.Middleware;
+
+public sealed class ExceptionMiddleware
 {
-    public class ExceptionMiddleware
+    private readonly RequestDelegate _next;
+    private readonly ILogger<ExceptionMiddleware> _logger;
+
+    public ExceptionMiddleware(
+        RequestDelegate next,
+        ILogger<ExceptionMiddleware> logger)
     {
-        private readonly RequestDelegate _next;
+        _next = next;
+        _logger = logger;
+    }
 
-        public ExceptionMiddleware(RequestDelegate next)
+    public async Task InvokeAsync(HttpContext context)
+    {
+        try
         {
-            _next = next;
+            await _next(context);
         }
-
-        public async Task Invoke(HttpContext context)
+        catch (ArgumentException ex)
         {
-            try
-            {
-                await _next(context);
-            }
-            catch (Exception ex)
-            {
-                context.Response.StatusCode = 500;
-                context.Response.ContentType = "application/json";
-
-                var response = new
-                {
-                    error = ex.Message
-                };
-
-                await context.Response.WriteAsJsonAsync(response);
-            }
+            await WriteProblemDetailsAsync(
+                context,
+                StatusCodes.Status400BadRequest,
+                "Bad Request",
+                ex.Message);
         }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Unhandled exception");
+
+            await WriteProblemDetailsAsync(
+                context,
+                StatusCodes.Status500InternalServerError,
+                "Internal Server Error",
+                "An unexpected error occurred.");
+        }
+    }
+
+    private static async Task WriteProblemDetailsAsync(
+        HttpContext context,
+        int statusCode,
+        string title,
+        string detail)
+    {
+        context.Response.StatusCode = statusCode;
+        context.Response.ContentType = "application/problem+json";
+
+        var problemDetails = new ProblemDetails
+        {
+            Status = statusCode,
+            Title = title,
+            Detail = detail,
+            Instance = context.Request.Path
+        };
+
+        await context.Response.WriteAsJsonAsync(problemDetails);
     }
 }

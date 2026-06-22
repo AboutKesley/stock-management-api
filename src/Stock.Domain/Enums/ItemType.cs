@@ -6,8 +6,8 @@ namespace Stock.Domain.Enums
 {
     public enum ItemType
     {
-        Eletronic = 0,
-        Wereable = 1,
+        Electronic = 0,
+        Wearable = 1,
         Food = 2,
         Book = 3
     }

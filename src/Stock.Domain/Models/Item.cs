@@ -1,36 +1,38 @@
 ﻿using Stock.Domain.Enums;
-using System.Runtime.ExceptionServices;
 
-namespace Stock.Domain.Models
+namespace Stock.Domain.Models;
+
+public class Item
 {
-    public class Item
+    public int Id { get; private set; }
+    public string Name { get; private set; } = string.Empty;
+    public int Quantity { get; private set; }
+    public ItemType Type { get; private set; }
+
+    public Item()
     {
-        public int Id { get; set; }
-        public  string Name { get; set; } = string.Empty;
-        public int Quantity { get; set; }
-        public ItemType Type { get; set; }
+    }
 
-        public static Item Create(string name, int quantity, ItemType type)
-        {
-            var item = new Item();
-            item.Update(name, quantity, type);
-            return item;
-        }
+    public static Item Create(string name, int quantity, ItemType type)
+    {
+        var item = new Item();
+        item.Update(name, quantity, type);
+        return item;
+    }
 
-        public void Update(string name, int quantity, ItemType type)
-        {
-            if(String.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Invalid name");
+    public void Update(string name, int quantity, ItemType type)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Name cannot be empty.", nameof(name));
 
-            if(quantity <= 0)
-                throw new ArgumentException("Quantity cannot be negative");
+        if (quantity <= 0)
+            throw new ArgumentOutOfRangeException(nameof(quantity), "Quantity must be greater than zero.");
 
-            if(!Enum.IsDefined(typeof(ItemType), type))
-                throw new ArgumentException("Invalid item type.");
+        if (!Enum.IsDefined(typeof(ItemType), type))
+            throw new ArgumentException("Invalid item type.", nameof(type));
 
-            Name = name;
-            Quantity = quantity;
-            Type = type;
-        }
+        Name = name;
+        Quantity = quantity;
+        Type = type;
     }
 }

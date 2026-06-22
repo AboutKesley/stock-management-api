@@ -1,41 +1,47 @@
-using Scalar.AspNetCore;
-using Stock.Extensions;
-using Stock.Examples;
-using Stock.Domain.Extensions;
-using Stock.Domain.Interfaces;
-using Stock.Domain.Services;
-using Stock.Infrastructure.Database;
-using Stock.Infrastructure.Database.Extensions;
+using Microsoft.OpenApi;
+using Stock.Api.Middleware;
+using Stock.Application.Extensions;
+using Stock.Infrastructure.Extensions;
+using System.Text.Json.Serialization;
 
-public partial class Program
-{
-    private static void Main(string[] args)
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services
+    .AddControllers()
+    .AddJsonOptions(options =>
     {
-        var builder = WebApplication.CreateBuilder(args);
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 
-        builder.Services.AddServices();
-        builder.Services.AddExamples();
-        builder.Services.AddDomain();
-        //builder.Services.AddScoped<IItemService, ItemService>();
-        //builder.Services.AddScoped<IItemRepository, ItemRepository>();
-        //builder.Services.AddDbContext<StockDbContext>();
-        builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddEndpointsApiExplorer();
 
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Stock Management API",
+        Version = "v1",
+        Description = "REST API for managing stock items using ASP.NET Core, EF Core and SQL Server."
+    });
+});
 
-        var app = builder.Build();
+builder.Services.AddApplication();
+builder.Services.AddInfrastructure(builder.Configuration);
 
-        if (app.Environment.IsDevelopment())
-        {
-            app.MapOpenApi();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/openapi/v1.json", "Stock API v1");
-            });
-        }
+var app = builder.Build();
 
-        app.UseHttpsRedirection();
-        app.UseAuthorization();
-        app.MapControllers();
-        app.Run();
-    }
+app.UseMiddleware<ExceptionMiddleware>();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
+
+app.UseHttpsRedirection();
+
+app.MapControllers();
+
+app.Run();
+
+public partial class Program;

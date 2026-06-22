@@ -9,13 +9,13 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.5" />
     <PackageReference Include="Scalar.AspNetCore" Version="2.13.13" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="10.1.5" />
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="10.1.5" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Stock.Domain\Stock.Domain.csproj" />
-    <ProjectReference Include="..\Stock.Infrastructure.Database\Stock.Infrastructure.Database.csproj" />
+    <ProjectReference Include="..\Stock.Application\Stock.Application.csproj" />
+    <ProjectReference Include="..\Stock.Infrastructure\Stock.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
